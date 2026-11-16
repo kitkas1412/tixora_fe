@@ -1,0 +1,70 @@
+/* tixora design tokens v1.0 — Swiss grid (nguồn: canvas tixora)
+   60% #FDFDFF canvas · 30% #F42902 flame · 10% #83FD80 volt
+   Nguyên tắc: lưới 12 cột · căn trái · một họ chữ · phân cấp bằng cỡ/độ đậm · đường kẻ thay bóng đổ · góc vuông */
+:root {
+  /* ---------- Primitive ---------- */
+  --canvas: #FDFDFF;
+  --flame-500: #F42902;   /* nền: chữ ink 4.7:1 · làm màu chữ chỉ khi ≥24px hoặc ≥19px đậm (4.0:1) */
+  --volt-500: #83FD80;    /* chỉ làm nền/chấm; KHÔNG làm màu chữ trên nền sáng */
+  --flame-50: #FFF3EF; --flame-100: #FFDFD3; --flame-300: #FF8358;
+  --flame-700: #A01B00;   /* chữ/link màu thương hiệu cỡ nhỏ · 7.9:1 */
+  --flame-900: #4F0E00;
+  --ink: #100E16;         /* 18.9:1 trên canvas */
+  --gray-700: #4D4B5C;    /* chữ phụ 8.4:1 */
+  --gray-500: #6B697A;    /* chữ mờ 5.3:1 */
+  --gray-400: #8A8898;    /* viền tắt ≥3:1 */
+  --gray-300: #D4D3DD;    /* đường kẻ mảnh */
+  --gray-100: #ECECF2;    /* nền tắt */
+  --white: #FFFFFF;
+  --green-700: #0E7A55; --amber-700: #A35200; --danger-700: #B0003A; --blue-700: #1F5FD1;
+
+  /* ---------- Semantic: bề mặt ---------- */
+  --bg-page: var(--canvas);          /* 60% */
+  --bg-brand: var(--flame-500);      /* 30%: dải thương hiệu, khối hero, footer, nút chính */
+  --bg-accent: var(--volt-500);      /* 10%: nhãn "đang bán", chấm trạng thái, ô đang chọn */
+  --bg-inverse: var(--ink);
+  --bg-muted: var(--gray-100);
+
+  /* ---------- Semantic: chữ ---------- */
+  --text-primary: var(--ink);
+  --text-secondary: var(--gray-700);
+  --text-muted: var(--gray-500);
+  --text-brand: var(--flame-700);
+  --text-on-brand: var(--ink);
+  --text-inverse: var(--canvas);
+
+  /* ---------- Semantic: đường kẻ (thay cho bóng đổ) ---------- */
+  --rule-strong: 2px solid var(--ink);     /* mở đầu section, đáy nav */
+  --rule-thin: 1px solid var(--gray-300);  /* giữa các hàng */
+  --rule-input: 1px solid var(--gray-400);
+
+  /* ---------- Semantic: hành động ---------- */
+  --action-primary-bg: var(--flame-500);  --action-primary-fg: var(--ink);
+  --action-on-brand-bg: var(--ink);       --action-on-brand-fg: var(--canvas);
+  --action-secondary-border: 2px solid var(--ink);
+  --action-disabled-bg: var(--gray-100);  --action-disabled-fg: var(--gray-700);
+  --selection-bg: var(--volt-500);
+  --focus-ring: 3px solid var(--ink);     /* offset 2px; trên nền tối dùng volt */
+
+  /* ---------- Hạng vé: thang độ sáng flame ---------- */
+  --tier-svip: var(--flame-900); --tier-vip: var(--flame-700); --tier-cat1: var(--flame-300); --tier-cat2: var(--flame-100);
+  --tier-soldout: repeating-linear-gradient(135deg, var(--gray-100) 0 6px, var(--canvas) 6px 12px);
+
+  /* ---------- Chữ: một họ, thang 1.333 ---------- */
+  --font: var(--font-be-vietnam, 'Be Vietnam Pro'), 'Helvetica Neue', Arial, sans-serif;
+  --fs-12: 12px; --fs-14: 14px; --fs-16: 16px; --fs-18: 18px; --fs-24: 24px; --fs-32: 32px; --fs-48: 48px; --fs-72: 72px; --fs-120: 120px;
+  --fw-regular: 400; --fw-medium: 500; --fw-bold: 700; --fw-black: 900;
+  --lh-display: 1.08;  /* ≥1.08 để không cắt dấu chồng tầng (Ệ, Ẫ) */
+  --lh-heading: 1.2; --lh-body: 1.55;
+  --tracking-display: -0.04em; --tracking-label: 0.02em;
+
+  /* ---------- Lưới ---------- */
+  --grid-columns: 12; --grid-gutter: 24px; --grid-margin: 24px; --grid-max: 1280px;
+  --grid-margin-mobile: 16px;
+
+  /* ---------- Khoảng cách: bội số 8 ---------- */
+  --space-1: 4px; --space-2: 8px; --space-3: 16px; --space-4: 24px; --space-5: 32px; --space-6: 48px; --space-7: 64px; --space-8: 96px;
+
+  /* ---------- Hình khối ---------- */
+  --radius: 0;  --touch-min: 44px; --seat: 44px;
+}

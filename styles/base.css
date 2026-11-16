@@ -1,0 +1,26 @@
+/* tixora base — import SAU tokens.css */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: var(--fs-16);
+  line-height: var(--lh-body);
+  font-variant-numeric: tabular-nums;
+}
+h1, h2, h3, h4, p { margin: 0; }
+a { color: inherit; }
+button, input, select, textarea { font: inherit; color: inherit; border-radius: 0; }
+:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.tx-on-dark :focus-visible, .tx-on-dark:focus-visible { outline-color: var(--volt-500); }
+.tx-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Lưới 12 cột — dùng: <div className="tx-container"><div className="tx-grid">…</div></div> */
+.tx-container { max-width: var(--grid-max); margin-inline: auto; padding-inline: var(--grid-margin); }
+.tx-grid { display: grid; grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr)); column-gap: var(--grid-gutter); }
+.tx-section { border-top: var(--rule-strong); padding-top: var(--space-4); }
+@media (max-width: 1279px) { :root { --grid-columns: 8; } }
+@media (max-width: 767px)  { :root { --grid-columns: 4; --grid-gutter: 16px; --grid-margin: var(--grid-margin-mobile); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

@@ -1,0 +1,9 @@
+.notice { display: grid; grid-template-columns: 32px minmax(0, 1fr); padding: var(--space-3); font-size: var(--fs-14); line-height: var(--lh-body); }
+.notice b { display: block; font-size: var(--fs-16); }
+.icon { font-size: var(--fs-18); font-weight: var(--fw-black); line-height: 1.3; }
+.success { background: var(--volt-500); color: var(--ink); }
+.danger { background: var(--white); border: 2px solid var(--danger-700); }
+.danger .icon, .danger b { color: var(--danger-700); }
+.info { background: var(--flame-50); }
+.warning { background: var(--white); border: 2px solid var(--amber-700); }
+.warning .icon, .warning b { color: var(--amber-700); }

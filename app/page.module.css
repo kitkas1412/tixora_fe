@@ -1,0 +1,20 @@
+.hero { display: flex; flex-wrap: wrap; gap: var(--space-4); padding: 40px 0 var(--space-6); }
+.heroMain { flex: 2 1 560px; min-width: 0; display: flex; flex-direction: column; gap: var(--space-4); }
+.h1 { font-size: clamp(56px, 8vw, 120px); font-weight: var(--fw-black); line-height: var(--lh-display); letter-spacing: -0.045em; overflow-wrap: anywhere; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-3); margin: 0; border-top: var(--rule-strong); padding-top: var(--space-3); font-size: 15px; }
+.facts dt { font-size: var(--fs-12); font-weight: var(--fw-bold); color: var(--text-secondary); }
+.facts dd { margin: 0; font-weight: var(--fw-bold); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.primary { min-width: 240px; }
+.poster { flex: 1 1 320px; min-width: 0; min-height: 440px; background: var(--flame-500); color: var(--ink); display: flex; flex-direction: column; justify-content: space-between; padding: var(--space-4); }
+.posterDay { font-size: clamp(112px, 12vw, 160px); font-weight: var(--fw-black); line-height: 1; letter-spacing: -0.06em; }
+.posterMeta { font-size: var(--fs-24); line-height: var(--lh-heading); }
+.explore { padding-bottom: var(--space-7); }
+.all { display: inline-flex; align-items: center; min-height: var(--touch-min); font-weight: var(--fw-bold); color: var(--text-brand); }
+.trust { padding-bottom: var(--space-7); display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-4); }
+.trustItem { border-top: var(--rule-strong); padding-top: var(--space-3); display: flex; flex-direction: column; gap: var(--space-2); }
+.trustNo { font-size: var(--fs-48); font-weight: var(--fw-black); line-height: var(--lh-display); color: var(--flame-500); }
+.trustItem h2 { font-size: var(--fs-18); font-weight: var(--fw-bold); }
+.trustItem p { font-size: 15px; line-height: var(--lh-body); color: var(--text-secondary); }
+@media (max-width: 520px) { .primary { min-width: 0; flex: 1 1 100%; } .poster { min-height: 280px; } }
+.page { width: 100%; }

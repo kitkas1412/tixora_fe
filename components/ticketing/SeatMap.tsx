@@ -1,5 +1,5 @@
 "use client";
-import { useState, type CSSProperties } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import { cx } from "../../lib/cx";
 import s from "./Ticketing.module.css";
 
@@ -10,8 +10,14 @@ export type SeatRowData = { row: string; seats: Seat[]; /** chỉ số ghế b�
  * Sơ đồ ghế: ô vuông ≥44px, cuộn ngang trên mobile, có phóng to.
  * Đang chọn = Volt + ✓ · Đã bán = sọc + ✕ · Xe lăn = XL viền xanh.
  */
-export function SeatMap({ rows, selected, onChange, max = 4, zoomable = true, stageLabel = "SÂN KHẤU" }: {
+export function SeatMap({ rows, selected, onChange, max = 4, zoomable = true, stageLabel = "SÂN KHẤU", fill, heading, disableAtMax = true }: {
   rows: SeatRowData[]; selected: string[]; onChange: (ids: string[]) => void; max?: number; zoomable?: boolean; stageLabel?: string;
+  /** Lấp đầy chiều cao còn lại của khung cha (cha phải là flex column có chiều cao giới hạn); sơ đồ cuộn bên trong. */
+  fill?: boolean;
+  /** Tiêu đề bên trái hàng thu phóng, VD "02 — Ghế (vuốt ngang)". */
+  heading?: ReactNode;
+  /** true (mặc định): khoá các ghế còn lại khi đủ `max`. false: giữ ghế bấm được, chỉ bấm ghế đã chọn để bỏ. */
+  disableAtMax?: boolean;
 }) {
   const sizes = [44, 52, 60];
   const [zoom, setZoom] = useState(0);
@@ -20,14 +26,19 @@ export function SeatMap({ rows, selected, onChange, max = 4, zoomable = true, st
     else if (selected.length < max) onChange([...selected, id]);
   };
   return (
-    <div className={s.seatMap}>
-      {zoomable && (
-        <div className={s.zoom} role="group" aria-label="Thu phóng sơ đồ">
-          <button type="button" aria-label="Thu nhỏ" disabled={zoom === 0} onClick={() => setZoom(zoom - 1)}>−</button>
-          <button type="button" aria-label="Phóng to" disabled={zoom === sizes.length - 1} onClick={() => setZoom(zoom + 1)}>+</button>
+    <div className={cx(s.seatMap, fill && s.seatMapFill)}>
+      {(zoomable || heading) && (
+        <div className={s.seatTools}>
+          {heading && <span className={s.seatHeading}>{heading}</span>}
+          {zoomable && (
+            <div className={s.zoom} role="group" aria-label="Thu phóng sơ đồ">
+              <button type="button" aria-label="Thu nhỏ" disabled={zoom === 0} onClick={() => setZoom(zoom - 1)}>−</button>
+              <button type="button" aria-label="Phóng to" disabled={zoom === sizes.length - 1} onClick={() => setZoom(zoom + 1)}>+</button>
+            </div>
+          )}
         </div>
       )}
-      <div className={s.seatScroll} style={{ "--seat-size": `${sizes[zoom]}px` } as CSSProperties}>
+      <div className={s.seatScroll} tabIndex={0} role="region" aria-label="Sơ đồ ghế, cuộn để xem thêm" style={{ "--seat-size": `${sizes[zoom]}px` } as CSSProperties}>
         <div className={s.seatInner}>
           <div className={s.stage}>{stageLabel}</div>
           {rows.map((r) => (
@@ -37,7 +48,7 @@ export function SeatMap({ rows, selected, onChange, max = 4, zoomable = true, st
                 const on = selected.includes(seat.id);
                 const taken = seat.status === "taken";
                 const acc = seat.status === "accessible";
-                const full = !on && selected.length >= max;
+                const full = disableAtMax && !on && selected.length >= max;
                 return (
                   <button
                     key={seat.id}
@@ -58,7 +69,7 @@ export function SeatMap({ rows, selected, onChange, max = 4, zoomable = true, st
       </div>
       <div className={s.legend}>
         <span><i />Trống</span>
-        <span><i className={s.lgSel} />✓ Bạn chọn</span>
+        <span><i className={s.lgSel} />✓ Chọn</span>
         <span><i className={s.lgTaken} />✕ Đã bán</span>
         <span><i className={s.lgAcc} />XL Xe lăn</span>
       </div>

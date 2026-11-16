@@ -2,6 +2,7 @@
 import { useId, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from "react";
 import { cx } from "../../lib/cx";
 import s from "./Field.module.css";
+import r from "./Radio.module.css";
 
 type FieldBase = { label: string; hint?: ReactNode; error?: ReactNode };
 
@@ -48,5 +49,31 @@ export function Checkbox({ label, className, ...rest }: { label: ReactNode } & I
       <input type="checkbox" {...rest} />
       <span>{label}</span>
     </label>
+  );
+}
+
+export type RadioOption = { value: string; label: ReactNode; hint?: ReactNode; disabled?: boolean };
+
+/**
+ * Nhóm radio (fieldset + legend, input gốc). Điều khiển hoàn toàn: truyền `value` và `onChange`.
+ * Mũi tên ←→↑↓ đổi lựa chọn nhờ các input cùng `name`. Hàng đang chọn nền Flame-50 + chữ đậm.
+ */
+export function RadioGroup({ legend, name, value, onChange, options, error, className }: {
+  legend: ReactNode; name: string; value: string; onChange: (value: string) => void; options: RadioOption[]; error?: ReactNode; className?: string;
+}) {
+  const auto = useId();
+  const msgId = `${auto}-msg`;
+  return (
+    <fieldset className={cx(r.group, className)} aria-describedby={error ? msgId : undefined}>
+      <legend className={r.legend}>{legend}</legend>
+      {options.map((o) => (
+        <label key={o.value} className={cx(r.option, value === o.value && r.selected, o.disabled && r.disabled)}>
+          <input type="radio" name={name} value={o.value} checked={value === o.value} disabled={o.disabled} onChange={() => onChange(o.value)} />
+          <span>{o.label}</span>
+          {o.hint && <span className={r.hint}>{o.hint}</span>}
+        </label>
+      ))}
+      {error && <span id={msgId} className={r.error}>✕ {error}</span>}
+    </fieldset>
   );
 }

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { cx } from "../../lib/cx";
 import { formatClock } from "../../lib/format";
+import { holdSecondsLeft } from "../../lib/order";
 import s from "./Ticketing.module.css";
 
 /**
@@ -11,24 +12,29 @@ import s from "./Ticketing.module.css";
 export function HoldTimer({ expiresAt, durationSec = 600, urgentAt = 120, compact, onExpire }: {
   expiresAt: number; durationSec?: number; urgentAt?: number; compact?: boolean; onExpire?: () => void;
 }) {
-  const [now, setNow] = useState(() => Date.now());
+  // `now` = null cho tới khi mount: tránh Date.now() lúc prerender/hydrate (lệch giây giữa server và client).
+  const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
+    const tick = () => setNow(Date.now());
+    const first = setTimeout(tick, 0);
+    const id = setInterval(tick, 1000);
+    return () => { clearTimeout(first); clearInterval(id); };
   }, []);
-  const left = Math.max(0, Math.round((expiresAt - now) / 1000));
-  const expired = left === 0;
+  const ready = now !== null;
+  const left = ready ? holdSecondsLeft(expiresAt, now) : durationSec;
+  const expired = ready && left === 0;
   const urgent = !expired && left <= urgentAt;
   useEffect(() => { if (expired) onExpire?.(); }, [expired, onExpire]);
 
+  const clock = ready ? formatClock(left) : "--:--";
   const label = expired ? "✕ Hết giờ — vé đã trả lại" : urgent ? "▲ Sắp hết giờ" : "Đang giữ vé";
   if (compact) {
-    return <span role="timer" aria-label={`${label} ${formatClock(left)}`} className={cx(s.timerCompact, urgent && s.timerUrgent)}>{formatClock(left)}</span>;
+    return <span role="timer" aria-label={`${label} ${clock}`} className={cx(s.timerCompact, urgent && s.timerUrgent)}>{clock}</span>;
   }
   return (
     <div role="timer" className={cx(s.timer, urgent && s.timerUrgent, expired && s.timerExpired)}>
       <b>{label}</b>
-      <b>{formatClock(left)}</b>
+      <b>{clock}</b>
       <div className={s.track}><div className={s.bar} style={{ width: `${(left / durationSec) * 100}%` }} /></div>
       <span className="tx-sr-only" aria-live="assertive">{urgent && left === urgentAt ? `Còn ${Math.round(urgentAt / 60)} phút để thanh toán` : ""}</span>
     </div>

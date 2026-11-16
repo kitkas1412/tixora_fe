@@ -18,9 +18,14 @@ export function Steps({ steps, current }: { steps: string[]; current: number }) 
 
 /** Đếm ngược tới giờ mở bán. */
 export function Countdown({ target }: { target: number }) {
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => { const id = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(id); }, []);
-  const t = Math.max(0, Math.floor((target - now) / 1000));
+  const [now, setNow] = useState<number | null>(null); // null tới khi mount: tránh Date.now() lúc prerender/hydrate
+  useEffect(() => {
+    const tick = () => setNow(Date.now());
+    const first = setTimeout(tick, 0);
+    const id = setInterval(tick, 1000);
+    return () => { clearTimeout(first); clearInterval(id); };
+  }, []);
+  const t = now === null ? 0 : Math.max(0, Math.ceil((target - now) / 1000));
   const parts = [[Math.floor(t / 86400), "ngày"], [Math.floor((t % 86400) / 3600), "giờ"], [Math.floor((t % 3600) / 60), "phút"], [t % 60, "giây"]] as const;
   return (
     <div className={s.countdown} role="timer">

@@ -1,0 +1,11 @@
+.group { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; }
+.legend { padding: 0 0 var(--space-2); font-size: var(--fs-12); font-weight: var(--fw-bold); }
+.option { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 12px; border-top: var(--rule-thin); font-size: 15px; font-weight: var(--fw-medium); cursor: pointer; }
+.option:last-of-type { border-bottom: var(--rule-thin); }
+.option:hover { background: var(--bg-muted); }
+.option input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--ink); }
+.option:has(input:focus-visible) { outline: var(--focus-ring); outline-offset: -2px; }
+.selected, .selected:hover { background: var(--flame-50); font-weight: var(--fw-bold); }
+.disabled { color: var(--text-muted); cursor: not-allowed; }
+.hint { margin-left: auto; font-size: var(--fs-12); font-weight: var(--fw-medium); color: var(--text-secondary); }
+.error { padding-top: var(--space-2); font-size: var(--fs-12); font-weight: var(--fw-medium); color: var(--danger-700); }

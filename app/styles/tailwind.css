@@ -1,5 +1,5 @@
-/* TUỲ CHỌN — chỉ dùng nếu project có Tailwind v4.
-   Trong app/globals.css:  @import "tailwindcss"; @import "../tixora/styles/tailwind.css";  */
+/* Ánh xạ token tixora sang Tailwind v4. Nạp từ app/globals.css sau tokens.css và base.css.
+   Xem app/globals.css. */
 @theme inline {
   --color-canvas: var(--canvas);
   --color-flame: var(--flame-500);

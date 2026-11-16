@@ -22,9 +22,23 @@ pnpm exec tsc --noEmit    # typecheck; there is no typecheck script
 ## Conventions and traps
 
 - `next.config.ts` enables `cacheComponents: true` and `partialPrefetching: true`. Before writing caching or data-fetching code (`fetch` caching, `use cache`, dynamic APIs), read the matching guide in `node_modules/next/dist/docs/01-app/`, as `AGENTS.md` requires.
-- Tailwind v4 has no `postcss.config.*` or `tailwind.config.*`. It is wired through the Turbopack `*.css` rule in `next.config.ts` and `app/globals.css` (`@import "tailwindcss";`). Put theme tokens in the `@theme inline` block in `app/globals.css`. Do not create the config files.
-- Geist and Geist Mono load through `next/font/google` in `app/layout.tsx` and are exposed as `--font-geist-sans` and `--font-geist-mono`.
+- Tailwind v4 has no `postcss.config.*` or `tailwind.config.*`. It is wired through the Turbopack `*.css` rule in `next.config.ts` and `app/globals.css` (`@import "tailwindcss";`). Map theme tokens in the `@theme inline` block in `app/styles/tailwind.css`. Do not create the config files.
+- The font is Be Vietnam Pro. `app/font.ts` exports `tixoraFont` (`next/font/google`, variable `--font-be-vietnam`), applied to `<html lang="vi">` in `app/layout.tsx`. Geist is no longer used.
 - `app/layout.tsx` uses the generated global `LayoutProps<"/">` type without an import. Use the generated global helpers (such as `LayoutProps` and `PageProps`) for props types.
 - Do not remove the `<!-- BEGIN:nextjs-agent-rules -->` block from `AGENTS.md`. `next dev` writes it back.
 - `.next/` is build output and is git-ignored. Do not edit it.
 - The repo has no git remote yet.
+
+## Design system
+
+The Tixora design system lives in `components/` and `app/styles/`. Reuse existing components and tokens before creating new ones.
+
+- `components/ui/*`: primitives (Button, Dialog, Field, Labels, Notice, Section, SegmentedControl). Each has a `.module.css` file.
+- `components/ticketing/*` and `components/event/*`: domain components, sharing `Ticketing.module.css` and `Event.module.css`.
+- `lib/`: `cx.ts` (class join), `format.ts` (`formatVND`, `formatClock`), `types.ts` (`TierKey`, `SaleStatus`).
+- `app/globals.css` imports `tokens.css`, `base.css` and `tailwind.css` in that order. Tokens are in `app/styles/tokens.css`; `base.css` holds the reset and the `.tx-*` classes.
+- There is no barrel file. Import each file directly, for example `@/components/ui/Button`.
+- Components use CSS Modules with `var(--*)` tokens. New pages can use Tailwind utilities from `tailwind.css`.
+- New tokens go in `app/styles/tokens.css`. Map them in `tailwind.css` only when a utility is needed.
+- No rounded corners (`--radius: 0`) and no hard-coded colours. Use tokens.
+- UI strings are in Vietnamese.

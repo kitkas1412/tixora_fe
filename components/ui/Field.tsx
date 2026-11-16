@@ -13,7 +13,7 @@ export function TextField({ label, hint, error, className, id, ...rest }: FieldB
   return (
     <div className={cx(s.field, className)}>
       <label htmlFor={inputId}>{label}</label>
-      <input id={inputId} className={cx(s.control, error && s.invalid)} aria-invalid={!!error || undefined} aria-describedby={hint || error ? msgId : undefined} {...rest} />
+      <input id={inputId} className={cx(s.control, !!error && s.invalid)} aria-invalid={!!error || undefined} aria-describedby={hint || error ? msgId : undefined} {...rest} />
       {error ? <span id={msgId} className={s.error}>✕ {error}</span> : hint ? <span id={msgId} className={s.hint}>{hint}</span> : null}
     </div>
   );
@@ -25,7 +25,7 @@ export function Select({ label, hint, error, className, id, children, ...rest }:
   return (
     <div className={cx(s.field, className)}>
       <label htmlFor={selectId}>{label}</label>
-      <select id={selectId} className={cx(s.control, error && s.invalid)} aria-invalid={!!error || undefined} {...rest}>{children}</select>
+      <select id={selectId} className={cx(s.control, !!error && s.invalid)} aria-invalid={!!error || undefined} {...rest}>{children}</select>
       {error ? <span className={s.error}>✕ {error}</span> : hint ? <span className={s.hint}>{hint}</span> : null}
     </div>
   );

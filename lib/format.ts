@@ -8,3 +8,6 @@ export function formatClock(totalSeconds: number): string {
   const s = Math.max(0, Math.floor(totalSeconds));
   return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 }
+
+/** Số giây còn lại tới mốc hết hạn (epoch ms), tối thiểu 0. Gọi `now` từ client, không gọi lúc render server. */
+export const holdSecondsLeft = (expiresAt: number, now: number = Date.now()): number => Math.max(0, Math.ceil((expiresAt - now) / 1000));

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Reveal } from "../motion/Reveal";
 import s from "./Event.module.css";
 
 export type EventCardProps = {
@@ -30,5 +31,5 @@ export function EventCard({ href, title, meta, metaRight, venue, price, image, a
 }
 
 export function EventGrid({ children }: { children: ReactNode }) {
-  return <div className={s.grid}>{children}</div>;
+  return <Reveal className={s.grid} onScroll>{children}</Reveal>;
 }

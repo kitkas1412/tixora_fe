@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { DUR, EASE, gsap, motionMatchMedia, useGSAP } from "../../lib/motion";
 import type { TierKey } from "../../lib/types";
 import { MobileAppBar } from "../layout/MobileAppBar";
 import { Button } from "../ui/Button";
@@ -22,12 +23,28 @@ export function TicketView({ title, category, tickets, mapsHref, justPaid = fals
   const [wallet, setWallet] = useState(false);
   const n = tickets.length;
   const t = tickets[index];
+  const cardRef = useRef<HTMLDivElement>(null);
+  const last = useRef({ index, dir: 1 });
+  // Đổi vé (sau mount): vé mới mờ/trượt vào theo hướng bấm. Lần đầu dùng keyframe CSS.
+  useGSAP(() => {
+    const dir = index >= last.current.index ? 1 : -1;
+    const changed = index !== last.current.index;
+    last.current = { index, dir };
+    if (!changed || !cardRef.current) return;
+    const el = cardRef.current;
+    const mm = motionMatchMedia({
+      motion: () => { gsap.fromTo(el, { opacity: 0, x: 24 * dir }, { opacity: 1, x: 0, duration: DUR.base, ease: EASE, clearProps: "transform,opacity" }); },
+    });
+    return () => mm.revert();
+  }, { dependencies: [index] });
   return (
     <>
       <MobileAppBar backHref="/" backLabel="Về trang chủ" title="Vé của tôi" right={`Vé ${index + 1} / ${n}`} />
       {justPaid && <div role="status" className={s.paid}>✓ Thanh toán thành công · đã gửi vé về email</div>}
       <main className={s.main}>
-        <TicketCard title={title} category={category} tier={t.tier} facts={t.facts} code={t.code} qr={<FakeQr value={t.code} />} />
+        <div ref={cardRef} className={s.cardEnter}>
+          <TicketCard title={title} category={category} tier={t.tier} facts={t.facts} code={t.code} qr={<FakeQr value={t.code} />} />
+        </div>
         {n > 1 && (
           <nav className={s.pager} aria-label="Chọn vé">
             <Button variant="secondary" size="m" disabled={index === 0} onClick={() => setIndex(index - 1)}>← Vé trước</Button>

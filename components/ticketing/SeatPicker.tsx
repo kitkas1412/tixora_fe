@@ -76,7 +76,7 @@ export function SeatPicker({ slug, eventLine, zones, initialZone }: {
         seats={seats}
         max={MAX_TICKETS}
         unitPrice={current.price}
-        onRemove={(id) => setSeats(seats.filter((x) => x !== id))}
+        onRemove={(id) => setSeats((p) => p.filter((x) => x !== id))}
         onContinue={next}
         busy={busy}
       />

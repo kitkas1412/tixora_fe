@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import { formatVND } from "../../lib/format";
+import m from "../motion/Motion.module.css";
+import { AnimatedNumber } from "../motion/AnimatedNumber";
 import s from "./Ticketing.module.css";
 
 export type OrderLine = { label: string; quantity: number; amount: number };
@@ -20,7 +22,7 @@ export function OrderSummary({ lines, action, title = "Đơn của bạn", footn
         ))
       )}
       <div className={`${s.line} ${s.lineMuted}`}><span>Phí dịch vụ (đã gồm)</span><span>—</span></div>
-      <div className={s.total}><span>Tổng cộng</span><b>{formatVND(total)}</b></div>
+      <div className={s.total}><span>Tổng cộng</span><b><AnimatedNumber value={total} format="vnd" className={m.inherit} /></b></div>
       {action}
       {footnote && <span className={s.foot}>{footnote}</span>}
     </aside>

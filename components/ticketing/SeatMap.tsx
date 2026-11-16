@@ -1,6 +1,7 @@
 "use client";
-import { useState, type CSSProperties, type ReactNode } from "react";
+import { useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { cx } from "../../lib/cx";
+import { DUR, EASE, gsap, MQ_REDUCE, useGSAP } from "../../lib/motion";
 import s from "./Ticketing.module.css";
 
 export type Seat = { id: string; label: string; status: "available" | "taken" | "accessible" };
@@ -21,12 +22,21 @@ export function SeatMap({ rows, selected, onChange, max = 4, zoomable = true, st
 }) {
   const sizes = [44, 52, 60];
   const [zoom, setZoom] = useState(0);
+  const root = useRef<HTMLDivElement>(null);
+  const { contextSafe } = useGSAP({ scope: root });
+  // Chọn: nảy 1 → 1.12 → 1; bỏ chọn: lún nhẹ rồi về chỗ. Không tween khi giảm chuyển động.
+  const feedback = contextSafe((el: HTMLElement, picking: boolean) => {
+    if (window.matchMedia(MQ_REDUCE).matches) return;
+    gsap.killTweensOf(el);
+    if (picking) gsap.fromTo(el, { scale: 1 }, { keyframes: [{ scale: 1.12, duration: DUR.fast * 0.6 }, { scale: 1, duration: DUR.fast }], ease: EASE, clearProps: "transform" });
+    else gsap.fromTo(el, { scale: 0.92 }, { scale: 1, duration: DUR.fast, ease: EASE, clearProps: "transform" });
+  });
   const toggle = (id: string) => {
     if (selected.includes(id)) onChange(selected.filter((x) => x !== id));
     else if (selected.length < max) onChange([...selected, id]);
   };
   return (
-    <div className={cx(s.seatMap, fill && s.seatMapFill)}>
+    <div ref={root} className={cx(s.seatMap, fill && s.seatMapFill)}>
       {(zoomable || heading) && (
         <div className={s.seatTools}>
           {heading && <span className={s.seatHeading}>{heading}</span>}
@@ -57,7 +67,7 @@ export function SeatMap({ rows, selected, onChange, max = 4, zoomable = true, st
                     aria-pressed={on}
                     aria-label={`Ghế ${seat.id}${taken ? ", đã bán" : on ? ", đang chọn" : acc ? ", ghế xe lăn" : ", còn trống"}`}
                     disabled={taken || full}
-                    onClick={() => toggle(seat.id)}
+                    onClick={(e) => { if (!on && selected.length >= max) return; feedback(e.currentTarget, !on); toggle(seat.id); }}
                   >
                     {on ? "✓" : taken ? "✕" : acc ? "XL" : seat.label}
                   </button>

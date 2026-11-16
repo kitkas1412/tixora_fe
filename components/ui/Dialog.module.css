@@ -3,3 +3,6 @@
 .title { font-size: var(--fs-24); font-weight: var(--fw-black); line-height: var(--lh-heading); }
 .body { margin: var(--space-3) 0 var(--space-4); font-size: 15px; line-height: var(--lh-body); color: var(--text-secondary); }
 .actions { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 12px; }
+.dialog[open]::backdrop { animation: dialogFade var(--dur-base) var(--ease-out); }
+@keyframes dialogFade { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .dialog[open]::backdrop { animation: none; } }

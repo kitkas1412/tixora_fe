@@ -1,0 +1,10 @@
+/*
+ * Reveal: con trực tiếp bị ẩn từ lần paint đầu, nhưng CHỈ khi người dùng chấp nhận chuyển động.
+ * GSAP sau đó đưa về opacity 1 (inline). Selector toàn cục [data-reveal] > * để <noscript> gỡ được.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  :global([data-reveal]) > :global(*) { opacity: 0; }
+}
+
+/* Số động kế thừa kiểu chữ của cha, thắng các selector kiểu `.x span` của component dùng nó. */
+.inherit.inherit, .inherit.inherit > span[aria-hidden] { font: inherit; letter-spacing: inherit; line-height: inherit; }

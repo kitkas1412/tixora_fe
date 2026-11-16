@@ -43,13 +43,24 @@ Mock-only ticketing flow. There is no backend and payment is simulated: submitti
 - The repo has no git remote yet.
 - The Tailwind `*.css` rule in `next.config.ts` must keep `condition: { not: { path: "*.module.css" } }`. It keeps CSS Modules on Next's native pipeline. Do not remove it.
 
+## Motion
+
+GSAP 3.15 with `@gsap/react`. Import `gsap`, `useGSAP`, `DUR`, `EASE`, `STAGGER`, `MQ_REDUCE`, `MQ_MOTION` and `motionMatchMedia` from `lib/motion.ts`, which registers `useGSAP`. Durations are 150–400ms with `power2.out` or `power3.out`. No bounce or elastic easing.
+
+- Register plugins in the file that uses them: `import { ScrollTrigger } from "gsap/ScrollTrigger"` (`Reveal`) or `gsap/Flip` (`ScheduleBoard`). Do not import `gsap/all`.
+- Create tweens inside `useGSAP`, or in handlers wrapped with `contextSafe`. Never call `gsap` during render. Pass `scope` when tweens target the component's own elements.
+- Every GSAP path must honour reduced motion: apply the end state instantly and never leave content hidden. Use `motionMatchMedia` or check `MQ_REDUCE`.
+- Entrances visible on first paint use CSS keyframes (for example `rise` in `app/page.module.css`), not GSAP, so there is no flash after hydration. Under `prefers-reduced-motion: reduce`, `base.css` sets `animation` and `transition` to `none`.
+- `Reveal` (`components/motion/Reveal.tsx`) staggers in the direct children. Use it for content below the fold (`onScroll`) whose children do not change after mount. Its `<noscript>` style keeps children visible without JS.
+- `AnimatedNumber` takes `format` as `"vnd" | "int" | "clock"`, a string, so server components can render it. The animated text is `aria-hidden`; the real value is in `.tx-sr-only`.
+
 ## Design system
 
 The Tixora design system lives in `components/` and `app/styles/`. Reuse existing components and tokens before creating new ones.
 
 - `components/ui/*`: primitives (Button, Dialog, Field, Labels, Notice, Section, SegmentedControl). Each has a `.module.css` file.
 - `components/ticketing/*` and `components/event/*`: domain components. Ticketing components share `Ticketing.module.css` and `Flow.module.css`. Event components use `Event.module.css` plus their own `*.module.css`.
-- `lib/`: `cx.ts` (class join), `format.ts` (`formatVND`, `formatClock`), `types.ts` (`TierKey`, `SaleStatus`).
+- `lib/`: `cx.ts` (class join), `format.ts` (`formatVND`, `formatClock`, `holdSecondsLeft`), `types.ts` (`TierKey`, `SaleStatus`).
 - `app/globals.css` imports `tokens.css`, `base.css` and `tailwind.css` in that order. Tokens are in `app/styles/tokens.css`; `base.css` holds the reset and the `.tx-*` classes.
 - There is no barrel file. Import each file directly, for example `@/components/ui/Button`.
 - Components use CSS Modules with `var(--*)` tokens. New pages can use Tailwind utilities from `tailwind.css`.

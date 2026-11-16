@@ -13,3 +13,10 @@
 @media (max-width: 719px) { .aboutText { grid-column: auto; } }
 .footGap { height: var(--space-7); }
 .page { width: 100%; }
+
+/* Tiêu đề trên nếp gấp: vào bằng CSS thuần. base.css tắt animation khi reduced-motion. */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.headMain > *, .poster { animation: rise var(--dur-slow) var(--ease-out) both; }
+.headMain > :nth-child(2) { animation-delay: var(--stagger); }
+.poster { animation-delay: calc(var(--stagger) * 2); }
+.facts { animation: rise var(--dur-slow) var(--ease-out) calc(var(--stagger) * 3) both; }

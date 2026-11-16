@@ -97,3 +97,8 @@
 .countdown b { display: block; font-size: var(--fs-48); font-weight: var(--fw-black); line-height: var(--lh-display); }
 .countdown span { font-size: var(--fs-12); color: var(--text-secondary); }
 .countdown div:last-child b { color: var(--flame-500); }
+
+/* HoldTimer: ≤ 60s, nhấp nháy opacity chậm một thuộc tính (base.css đã tắt animation khi giảm chuyển động) */
+.timerCritical { outline: 2px solid transparent; outline-offset: 2px; animation: timerPulse 1.6s ease-in-out infinite; }
+@keyframes timerPulse { 0%, 100% { outline-color: transparent; } 50% { outline-color: currentColor; } }
+@media (prefers-reduced-motion: reduce) { .timerCritical { animation: none; } }

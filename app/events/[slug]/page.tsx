@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { TierSelector } from "@/components/event/TierSelector";
+import { Reveal } from "@/components/motion/Reveal";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { StatusLabel } from "@/components/ui/Labels";
@@ -54,12 +55,12 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
           </dl>
 
           <TierSelector event={event}>
-            <section className={s.about} aria-labelledby="about-title">
+            <Reveal as="section" className={s.about} aria-labelledby="about-title" onScroll>
               <h2 id="about-title">Giới thiệu</h2>
               <div className={s.aboutText}>
                 {event.description.map((p) => <p key={p}>{p}</p>)}
               </div>
-            </section>
+            </Reveal>
           </TierSelector>
         </main>
       </div>

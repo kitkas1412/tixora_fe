@@ -29,7 +29,7 @@ export function Countdown({ target }: { target: number }) {
   const parts = [[Math.floor(t / 86400), "ngày"], [Math.floor((t % 86400) / 3600), "giờ"], [Math.floor((t % 3600) / 60), "phút"], [t % 60, "giây"]] as const;
   return (
     <div className={s.countdown} role="timer">
-      {parts.map(([n, unit]) => <div key={unit}><b>{String(n).padStart(2, "0")}</b><span>{unit}</span></div>)}
+      {parts.map(([n, unit]) => <div key={unit}><b>{now === null ? "--" : String(n).padStart(2, "0")}</b><span>{unit}</span></div>)}
     </div>
   );
 }

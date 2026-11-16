@@ -65,7 +65,7 @@ function href(path: string, params: Record<string, string | undefined>): string 
 
 /** Hạn giữ vé (epoch ms) tính từ bây giờ. Gọi ở client khi người dùng bấm. */
 export const newHoldExpiry = (now: number = Date.now()): number => now + HOLD_MINUTES * 60_000;
-export const holdSecondsLeft = (expiresAt: number, now: number = Date.now()): number => Math.max(0, Math.ceil((expiresAt - now) / 1000));
+export { holdSecondsLeft } from "./format";
 
 /* --- event -> seats --- */
 export type SeatsParams = { zone?: TierKey };

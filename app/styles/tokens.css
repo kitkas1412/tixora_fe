@@ -67,4 +67,9 @@
 
   /* ---------- Hình khối ---------- */
   --radius: 0;  --touch-min: 44px; --seat: 44px;
+
+  /* ---------- Chuyển động: ngắn, dứt khoát, không nảy (GSAP đọc hằng số tương ứng ở lib/motion.ts) ---------- */
+  --dur-fast: 150ms; --dur-base: 240ms; --dur-slow: 400ms;
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);  /* ≈ power2.out */
+  --stagger: 60ms;
 }

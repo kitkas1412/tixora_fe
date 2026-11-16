@@ -42,3 +42,5 @@
 .subtitle { font-size: var(--fs-12); color: var(--text-secondary); overflow-wrap: anywhere; }
 .right { flex: none; display: inline-flex; align-items: center; font-size: var(--fs-14); font-weight: var(--fw-bold); }
 .sticky { position: sticky; bottom: 0; z-index: 10; margin-top: auto; display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-3); padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px)); background: var(--bg-page); border-top: var(--rule-strong); }
+.sticky { animation: stickyUp var(--dur-base) var(--ease-out) backwards; } /* transform không đổi layout */
+@keyframes stickyUp { from { transform: translateY(100%); } }

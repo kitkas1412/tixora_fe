@@ -18,3 +18,11 @@
 .trustItem p { font-size: 15px; line-height: var(--lh-body); color: var(--text-secondary); }
 @media (max-width: 520px) { .primary { min-width: 0; flex: 1 1 100%; } .poster { min-height: 280px; } }
 .page { width: 100%; }
+
+/* Hero: vào bằng CSS thuần (không JS, không flash). base.css tắt animation khi reduced-motion. */
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.heroMain > *, .poster { animation: rise var(--dur-slow) var(--ease-out) both; }
+.heroMain > :nth-child(2) { animation-delay: var(--stagger); }
+.heroMain > :nth-child(3) { animation-delay: calc(var(--stagger) * 2); }
+.heroMain > :nth-child(4) { animation-delay: calc(var(--stagger) * 3); }
+.poster { animation-delay: calc(var(--stagger) * 2); }

@@ -3,6 +3,7 @@ import { EventCard, EventGrid } from "@/components/event/EventCard";
 import { ScheduleBoard } from "@/components/event/ScheduleBoard";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { Reveal } from "@/components/motion/Reveal";
 import { Button } from "@/components/ui/Button";
 import { StatusLabel } from "@/components/ui/Labels";
 import { SectionHeader } from "@/components/ui/Section";
@@ -69,7 +70,8 @@ export default function HomePage() {
             </EventGrid>
           </section>
 
-          <section className={s.trust} aria-label="Vì sao chọn Tixora">
+          <section aria-label="Vì sao chọn Tixora">
+            <Reveal className={s.trust} onScroll>
             {TRUST_ITEMS.map((t, i) => (
               <div key={t.title} className={s.trustItem}>
                 <b className={s.trustNo}>{String(i + 1).padStart(2, "0")}</b>
@@ -77,6 +79,7 @@ export default function HomePage() {
                 <p>{t.text}</p>
               </div>
             ))}
+            </Reveal>
           </section>
         </main>
       </div>

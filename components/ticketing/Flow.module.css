@@ -66,3 +66,9 @@
 .qrSvg { display: block; width: 189px; max-width: 100%; height: auto; color: var(--ink); background: var(--white); }
 .qrCap { font-size: 11px; color: var(--text-secondary); }
 .notice { margin: 0; }
+
+/* Vào trang lần đầu: CSS thuần (không ẩn nội dung SSR rồi mới hiện bằng JS); base.css tắt animation khi giảm chuyển động */
+.paid { animation: flowDrop var(--dur-base) var(--ease-out) backwards; }
+.cardEnter { animation: flowRise var(--dur-slow) var(--ease-out) backwards; }
+@keyframes flowDrop { from { opacity: 0; transform: translateY(-8px); } }
+@keyframes flowRise { from { opacity: 0; transform: translateY(14px); } }

@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { DUR, EASE, gsap, MQ_REDUCE, useGSAP } from "../../lib/motion";
 import { buildTicketHref, generateOrderCode, HOLD_MINUTES, HOLD_SECONDS, newHoldExpiry, orderToTicketSummary, type CheckoutOrder } from "../../lib/order";
 import type { TierKey } from "../../lib/types";
 import { MobileAppBar } from "../layout/MobileAppBar";
@@ -61,6 +62,13 @@ export function CheckoutView({ model }: { model: CheckoutModel }) {
   }, [hold]);
   const onExpire = useCallback(() => setExpired(true), []);
 
+  const { contextSafe } = useGSAP();
+  // Nudge ngang 4px đúng một lần; không chạy khi giảm chuyển động.
+  const nudge = contextSafe((el: HTMLElement | null) => {
+    if (!el || window.matchMedia(MQ_REDUCE).matches) return;
+    const target = el instanceof HTMLInputElement && el.type === "checkbox" ? (el.parentElement ?? el) : el;
+    gsap.fromTo(target, { x: 4 }, { x: 0, duration: DUR.base, ease: EASE, clearProps: "transform" });
+  });
   const submit = (e: FormEvent) => {
     e.preventDefault();
     if (expired || busy) return;
@@ -71,7 +79,7 @@ export function CheckoutView({ model }: { model: CheckoutModel }) {
     };
     setErrors(next);
     const firstId = next.email ? "co-email" : next.cccd ? "co-cccd" : next.terms ? "co-terms" : null;
-    if (firstId) { document.getElementById(firstId)?.focus(); return; }
+    if (firstId) { const el = document.getElementById(firstId); el?.focus(); nudge(el); return; }
     setBusy(true);
     const code = generateOrderCode();
     router.push(buildTicketHref(orderToTicketSummary(model.order, code)));

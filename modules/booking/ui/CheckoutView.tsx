@@ -12,7 +12,6 @@ import { Checkbox, TextField } from "@/shared/ui/Field";
 import { TierSwatch } from "@/shared/ui/Labels";
 import { Notice } from "@/shared/ui/Notice";
 import { HoldTimer } from "@/modules/booking/ui/HoldTimer";
-import s from "@/shared/ui/flow/Flow.module.css";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CCCD_RE = /^\d{12}$/;
@@ -77,12 +76,12 @@ export function CheckoutView({ model, payment, ticketHref }: { model: CheckoutMo
     <>
       <MobileAppBar backHref={model.backHref} backLabel="Quay lại" title="Thanh toán" right="02 / 03" />
       {hold !== null && (
-        <div className={s.hold}>
+        <div className="tx-flow-hold">
           <span>Vé được giữ trong</span>
           <HoldTimer compact expiresAt={hold} durationSec={HOLD_SECONDS} onExpire={onExpire} />
         </div>
       )}
-      <main className={s.main}>
+      <main className="tx-flow-main">
         {expired ? (
           <>
             <Notice tone="danger" title="Đã hết thời gian giữ vé">Vé đã được trả lại. Hãy chọn lại để tiếp tục thanh toán.</Notice>
@@ -90,33 +89,33 @@ export function CheckoutView({ model, payment, ticketHref }: { model: CheckoutMo
           </>
         ) : (
           <>
-            <div className={s.orderLine}>
+            <div className="tx-flow-order-line">
               <TierSwatch tier={model.swatch} />
-              <div className={s.orderInfo}><b>{model.title}</b><span>{model.detail}</span></div>
-              <b className={s.orderQty}>× {model.count}</b>
+              <div className="tx-flow-order-info"><b>{model.title}</b><span>{model.detail}</span></div>
+              <b className="tx-flow-order-qty">× {model.count}</b>
             </div>
-            <form id="checkout-form" className={s.form} onSubmit={submit} noValidate>
-              <div className={s.fields}>
+            <form id="checkout-form" className="tx-flow-form" onSubmit={submit} noValidate>
+              <div className="tx-flow-fields">
                 <TextField id="co-email" label="Email nhận vé" type="email" autoComplete="email" inputMode="email" placeholder="ten@email.com"
                   value={email} onChange={(e) => setEmail(e.target.value)} error={errors.email} />
                 <TextField id="co-cccd" label="CCCD người dự (vé gắn tên)" inputMode="numeric" autoComplete="off" maxLength={12} placeholder="12 chữ số"
                   value={cccd} onChange={(e) => setCccd(e.target.value.replace(/\D/g, ""))} error={errors.cccd} />
               </div>
               {payment}
-              <div className={s.checks}>
+              <div className="tx-flow-checks">
                 <Checkbox label="Xuất hoá đơn VAT" checked={vat} onChange={(e) => setVat(e.target.checked)} />
                 <Checkbox id="co-terms" label="Đồng ý điều khoản mua vé" required checked={terms}
                   aria-invalid={!!errors.terms || undefined} aria-describedby={errors.terms ? "co-terms-msg" : undefined}
                   onChange={(e) => setTerms(e.target.checked)} />
-                {errors.terms && <span id="co-terms-msg" className={s.checkError}>✕ {errors.terms}</span>}
+                {errors.terms && <span id="co-terms-msg" className="tx-flow-check-error">✕ {errors.terms}</span>}
               </div>
             </form>
           </>
         )}
       </main>
       <StickyBar>
-        <div className={s.sumLine}><span>{model.breakdown}</span><span>đã gồm phí</span></div>
-        <div className={s.sumTotal}><b>Tổng cộng</b><b>{model.totalText}</b></div>
+        <div className="tx-flow-sum-line"><span>{model.breakdown}</span><span>đã gồm phí</span></div>
+        <div className="tx-flow-sum-total"><b>Tổng cộng</b><b>{model.totalText}</b></div>
         <Button type="submit" form="checkout-form" arrow fullWidth disabled={expired} loading={busy} loadingText="Đang thanh toán…">Thanh toán</Button>
       </StickyBar>
     </>

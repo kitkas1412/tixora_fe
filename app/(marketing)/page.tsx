@@ -12,7 +12,6 @@ import { ART_TONE_VAR } from "@/modules/catalog/model/art-tone";
 import { selectHomeEvents } from "@/modules/catalog/model/event-view";
 import { TRUST_ITEMS } from "@/shared/content/site";
 import { formatVND } from "@/shared/lib/format";
-import s from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Tixora · Vé concert, festival, liveshow",
@@ -26,35 +25,35 @@ export default function HomePage() {
 
   return (
     <>
-      <div className={`tx-container ${s.page}`}>
+      <div className="tx-container tx-home-page">
         <SiteHeader />
         <main>
-          <section className={s.hero} aria-labelledby="hero-title">
-            <div className={s.heroMain}>
+          <section className="tx-home-hero" aria-labelledby="hero-title">
+            <div className="tx-home-hero-main">
               <StatusLabel status="on-sale">Đang mở bán — Tuần 49</StatusLabel>
-              <h1 id="hero-title" className={s.h1}>{titleHead}<br />{titleRest.join(" ")}</h1>
-              <dl className={s.facts}>
+              <h1 id="hero-title" className="tx-home-h1">{titleHead}<br />{titleRest.join(" ")}</h1>
+              <dl className="tx-home-facts">
                 <div><dt>Ngày</dt><dd>{hero.weekday}, {hero.day}.{hero.month}</dd></div>
                 <div><dt>Địa điểm</dt><dd>{hero.venue}</dd></div>
                 <div><dt>Giá từ</dt><dd>{hero.priceFrom ? formatVND(hero.priceFrom) : "Sắp công bố"}</dd></div>
               </dl>
-              <div className={s.actions}>
-                <Button href={`/events/${hero.slug}`} arrow className={s.primary}>Mua vé</Button>
+              <div className="tx-home-actions">
+                <Button href={`/events/${hero.slug}`} arrow className="tx-home-primary">Mua vé</Button>
                 <Button href={`/events/${hero.slug}`} variant="secondary">Chi tiết</Button>
               </div>
             </div>
-            <div className={s.poster} aria-hidden="true">
-              <b className={s.posterDay}>{hero.day}</b>
-              <b className={s.posterMeta}>Tháng {Number(hero.month)}<br />{hero.showtime}</b>
+            <div className="tx-home-poster" aria-hidden="true">
+              <b className="tx-home-poster-day">{hero.day}</b>
+              <b className="tx-home-poster-meta">Tháng {Number(hero.month)}<br />{hero.showtime}</b>
             </div>
           </section>
 
           <ScheduleBoard events={events} />
 
-          <section className={s.explore} aria-labelledby="explore-title">
+          <section className="tx-home-explore" aria-labelledby="explore-title">
             <SectionHeader
               title={<span id="explore-title">Khám phá</span>}
-              actions={<a href="#lich-dien" className={s.all}>Tất cả sự kiện →</a>}
+              actions={<a href="#lich-dien" className="tx-home-all">Tất cả sự kiện →</a>}
             />
             <EventGrid>
               {explore.map((e) => (
@@ -73,10 +72,10 @@ export default function HomePage() {
           </section>
 
           <section aria-label="Vì sao chọn Tixora">
-            <Reveal className={s.trust} onScroll>
+            <Reveal className="tx-home-trust" onScroll>
             {TRUST_ITEMS.map((t, i) => (
-              <div key={t.title} className={s.trustItem}>
-                <b className={s.trustNo}>{String(i + 1).padStart(2, "0")}</b>
+              <div key={t.title} className="tx-home-trust-item">
+                <b className="tx-home-trust-no">{String(i + 1).padStart(2, "0")}</b>
                 <h2>{t.title}</h2>
                 <p>{t.text}</p>
               </div>

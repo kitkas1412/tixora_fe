@@ -1,7 +1,6 @@
 "use client";
 import type { ReactNode } from "react";
 import { cx } from "@/shared/lib/cx";
-import s from "./SegmentedControl.module.css";
 
 export type Option<T extends string> = { value: T; label: ReactNode; disabled?: boolean };
 
@@ -10,9 +9,9 @@ export function SegmentedControl<T extends string>({ options, value, onChange, f
   options: Option<T>[]; value: T; onChange: (v: T) => void; fullWidth?: boolean; label?: string; className?: string;
 }) {
   return (
-    <div role="group" aria-label={label} className={cx(s.group, fullWidth && s.full, className)}>
+    <div role="group" aria-label={label} className={cx("tx-seg", fullWidth && "tx-seg--full", className)}>
       {options.map((o) => (
-        <button key={o.value} type="button" className={s.item} aria-pressed={value === o.value} disabled={o.disabled} onClick={() => onChange(o.value)}>
+        <button key={o.value} type="button" className="tx-seg-item" aria-pressed={value === o.value} disabled={o.disabled} onClick={() => onChange(o.value)}>
           {o.label}
         </button>
       ))}
@@ -23,9 +22,9 @@ export function SegmentedControl<T extends string>({ options, value, onChange, f
 /** Tab gạch chân Flame 3px. Nội dung tab do trang tự render theo `value`. */
 export function Tabs<T extends string>({ options, value, onChange, label }: { options: Option<T>[]; value: T; onChange: (v: T) => void; label?: string }) {
   return (
-    <div role="tablist" aria-label={label} className={s.tabs}>
+    <div role="tablist" aria-label={label} className="tx-tabs">
       {options.map((o) => (
-        <button key={o.value} type="button" role="tab" className={s.tab} aria-selected={value === o.value} disabled={o.disabled} onClick={() => onChange(o.value)}>
+        <button key={o.value} type="button" role="tab" className="tx-tabs-item" aria-selected={value === o.value} disabled={o.disabled} onClick={() => onChange(o.value)}>
           {o.label}
         </button>
       ))}

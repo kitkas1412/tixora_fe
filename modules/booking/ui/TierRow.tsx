@@ -4,7 +4,6 @@ import { formatVND } from "@/shared/lib/format";
 import type { TierKey } from "@/shared/kernel/tier";
 import { TierSwatch } from "@/shared/ui/Labels";
 import { QuantityStepper } from "@/modules/booking/ui/QuantityStepper";
-import s from "./Booking.module.css";
 
 export type TierRowProps = {
   tier: TierKey;
@@ -22,15 +21,15 @@ export type TierRowProps = {
 
 export function TierRow({ tier, name, price, note, soldOut, lowStock, quantity, maxQuantity, onQuantityChange }: TierRowProps) {
   return (
-    <div className={cx(s.tier, soldOut && s.tierSold)}>
+    <div className={cx("tx-booking-tier", soldOut && "tx-booking-tier--sold")}>
       <TierSwatch tier={tier} soldOut={soldOut} />
-      <div className={s.tierInfo}>
+      <div className="tx-booking-tier-info">
         <b>{name}</b>
-        {note && <span className={s.tierNote}>{note}</span>}
-        {soldOut && <span className={cx(s.tierFlag, s.flagDanger)}>✕ Hết vé</span>}
-        {!soldOut && lowStock && <span className={cx(s.tierFlag, s.flagWarning)}>▲ Còn ít vé</span>}
+        {note && <span className="tx-booking-tier-note">{note}</span>}
+        {soldOut && <span className={cx("tx-booking-tier-flag", "tx-booking-tier-flag--danger")}>✕ Hết vé</span>}
+        {!soldOut && lowStock && <span className={cx("tx-booking-tier-flag", "tx-booking-tier-flag--warning")}>▲ Còn ít vé</span>}
       </div>
-      <span className={s.tierPrice}>{formatVND(price)}</span>
+      <span className="tx-booking-tier-price">{formatVND(price)}</span>
       <QuantityStepper label={name} value={quantity} max={maxQuantity} disabled={soldOut} onChange={onQuantityChange} />
     </div>
   );

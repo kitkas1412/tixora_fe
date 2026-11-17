@@ -10,7 +10,6 @@ import { MAX_TICKETS, type TierKey, type TierQuantities } from "@/shared/kernel/
 import { Button } from "@/shared/ui/Button";
 import { OrderSummary } from "@/modules/booking/ui/OrderSummary";
 import { TierRow } from "@/modules/booking/ui/TierRow";
-import s from "./TierSelector.module.css";
 
 /**
  * Cột chính + cột "Đơn của bạn" của trang chi tiết. Số lượng theo hạng dùng chung cho
@@ -32,12 +31,12 @@ export function TierSelector({ event, children }: { event: EventItem; children?:
   const emptyLabel = !open ? (event.status === "upcoming" ? "Chưa mở bán" : "Đã hết vé") : "Chọn ít nhất 1 vé";
 
   return (
-    <div className={s.main}>
-      <div className={s.col}>
-        <section className={s.tiers} aria-labelledby="tier-title">
-          <div className={s.head}>
+    <div className="tx-tier-selector">
+      <div className="tx-tier-selector-col">
+        <section className="tx-tier-selector-tiers" aria-labelledby="tier-title">
+          <div className="tx-tier-selector-head">
             <h2 id="tier-title">Chọn hạng vé</h2>
-            {open && <Link href={buildSeatsHref(event.slug)} className={s.seatLink}>Xem sơ đồ ghế →</Link>}
+            {open && <Link href={buildSeatsHref(event.slug)} className="tx-tier-selector-seat-link">Xem sơ đồ ghế →</Link>}
           </div>
           {event.tiers.map((t) => {
             const q = qty[t.key] ?? 0;
@@ -57,11 +56,11 @@ export function TierSelector({ event, children }: { event: EventItem; children?:
               />
             );
           })}
-          <p className={s.note}>Giá minh hoạ, đã gồm phí dịch vụ. Tối đa {MAX_TICKETS} vé / tài khoản.</p>
+          <p className="tx-tier-selector-note">Giá minh hoạ, đã gồm phí dịch vụ. Tối đa {MAX_TICKETS} vé / tài khoản.</p>
         </section>
         {children}
       </div>
-      <div className={s.aside}>
+      <div className="tx-tier-selector-aside">
         <OrderSummary
           lines={lines.filter((l) => l.quantity > 0).map((l) => ({ label: l.tier.name, quantity: l.quantity, amount: l.tier.price * l.quantity }))}
           action={

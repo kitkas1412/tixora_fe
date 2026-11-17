@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Reveal } from "@/shared/motion/Reveal";
-import s from "./Event.module.css";
 
 export type EventCardProps = {
   href: string;
@@ -21,15 +20,15 @@ export type EventCardProps = {
 /** Thẻ sự kiện dạng lưới (khám phá). Không khung — chỉ kẻ đậm trên. Ảnh đơn sắc, hover hiện màu. */
 export function EventCard({ href, title, meta, metaRight, venue, price, image, art }: EventCardProps) {
   return (
-    <Link href={href} className={s.card}>
-      <div className={s.meta}><span>{meta}</span>{metaRight && <span>{metaRight}</span>}</div>
-      <div className={s.media} style={art ? { background: art } : undefined}>{image && <img src={image.src} alt={image.alt} loading="lazy" />}</div>
-      <b className={s.title}>{title}</b>
-      <div className={s.foot}><span>{venue}</span><b>{price}</b></div>
+    <Link href={href} className="tx-event-card">
+      <div className="tx-event-card-meta"><span>{meta}</span>{metaRight && <span>{metaRight}</span>}</div>
+      <div className="tx-event-card-media" style={art ? { background: art } : undefined}>{image && <img src={image.src} alt={image.alt} loading="lazy" />}</div>
+      <b className="tx-event-card-title">{title}</b>
+      <div className="tx-event-card-foot"><span>{venue}</span><b>{price}</b></div>
     </Link>
   );
 }
 
 export function EventGrid({ children }: { children: ReactNode }) {
-  return <Reveal className={s.grid} onScroll>{children}</Reveal>;
+  return <Reveal className="tx-event-grid" onScroll>{children}</Reveal>;
 }

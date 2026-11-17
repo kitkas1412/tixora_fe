@@ -1,4 +1,3 @@
-import s from "@/shared/ui/flow/Flow.module.css";
 
 const N = 21;
 
@@ -42,12 +41,12 @@ export function FakeQr({ value }: { value: string }) {
     }
   }
   return (
-    <figure className={s.qr}>
-      <svg className={s.qrSvg} viewBox={`-1 -1 ${N + 2} ${N + 2}`} role="img" aria-label="Mã QR vé (minh hoạ)" shapeRendering="crispEdges">
+    <figure className="tx-flow-qr">
+      <svg className="tx-flow-qr-svg" viewBox={`-1 -1 ${N + 2} ${N + 2}`} role="img" aria-label="Mã QR vé (minh hoạ)" shapeRendering="crispEdges">
         <rect x={-1} y={-1} width={N + 2} height={N + 2} style={{ fill: "var(--white)" }} />
         <path d={d} fill="currentColor" />
       </svg>
-      <figcaption className={s.qrCap}>QR minh hoạ</figcaption>
+      <figcaption className="tx-flow-qr-cap">QR minh hoạ</figcaption>
     </figure>
   );
 }

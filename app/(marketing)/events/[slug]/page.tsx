@@ -8,7 +8,6 @@ import { StatusLabel } from "@/shared/ui/Labels";
 import { getEvent, getEventSlugs } from "@/modules/catalog/api/events.mock";
 import { ART_TONE_VAR } from "@/modules/catalog/model/art-tone";
 import { eventFacts, isDarkTone } from "@/modules/catalog/model/event-view";
-import s from "./page.module.css";
 
 export function generateStaticParams() {
   return getEventSlugs().map((slug) => ({ slug }));
@@ -30,36 +29,36 @@ export default async function EventPage({ params }: PageProps<"/events/[slug]">)
 
   return (
     <>
-      <div className={`tx-container ${s.page}`}>
+      <div className="tx-container tx-event-page">
         <SiteHeader variant="slim" crumbs={[{ label: "Lịch diễn", href: "/" }, { label: event.genre }, { label: event.title }]} />
         <main>
-          <header className={s.header}>
-            <div className={s.headMain}>
+          <header className="tx-event-page-header">
+            <div className="tx-event-page-head-main">
               <StatusLabel status={event.status}>{event.statusText} · {event.genre} · {event.subtitle}</StatusLabel>
-              <h1 className={s.h1}>{event.title}</h1>
+              <h1 className="tx-event-page-h1">{event.title}</h1>
             </div>
-            <div className={s.poster} style={{ background: ART_TONE_VAR[event.artTone], color: dark ? "var(--canvas)" : "var(--ink)" }} aria-hidden="true">
+            <div className="tx-event-page-poster" style={{ background: ART_TONE_VAR[event.artTone], color: dark ? "var(--canvas)" : "var(--ink)" }} aria-hidden="true">
               <b>{event.day}.{event.month}</b>
             </div>
           </header>
 
-          <dl className={s.facts} aria-label="Thông tin sự kiện">
+          <dl className="tx-event-page-facts" aria-label="Thông tin sự kiện">
             {facts.map((f) => (
               <div key={f.k}><dt>{f.k}</dt><dd>{f.v}</dd></div>
             ))}
           </dl>
 
           <TierSelector event={event}>
-            <Reveal as="section" className={s.about} aria-labelledby="about-title" onScroll>
+            <Reveal as="section" className="tx-event-page-about" aria-labelledby="about-title" onScroll>
               <h2 id="about-title">Giới thiệu</h2>
-              <div className={s.aboutText}>
+              <div className="tx-event-page-about-text">
                 {event.description.map((p) => <p key={p}>{p}</p>)}
               </div>
             </Reveal>
           </TierSelector>
         </main>
       </div>
-      <div className={s.footGap} />
+      <div className="tx-event-page-foot-gap" />
       <SiteFooter />
     </>
   );

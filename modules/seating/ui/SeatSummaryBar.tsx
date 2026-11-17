@@ -4,7 +4,6 @@ import { DUR, EASE, gsap, motionMatchMedia, MQ_REDUCE, useGSAP } from "@/shared/
 import { AnimatedNumber } from "@/shared/motion/AnimatedNumber";
 import { StickyBar } from "@/shared/ui/layout/StickyBar";
 import { Button } from "@/shared/ui/Button";
-import s from "@/shared/ui/flow/Flow.module.css";
 
 /**
  * Thanh đáy chọn ghế: chip ghế (bấm để bỏ), cảnh báo đủ ghế, tổng tiền (đã gồm phí) và nút "Giữ n ghế".
@@ -43,16 +42,16 @@ export function SeatSummaryBar({ seats, max, unitPrice, onRemove, onContinue, bu
   })();
   return (
     <StickyBar>
-      <div ref={chipsRef} className={s.chips} role="status" aria-live="polite">
-        {n === 0 && <span className={s.chipsEmpty}>Chưa chọn ghế · tối đa {max}</span>}
+      <div ref={chipsRef} className="tx-flow-chips" role="status" aria-live="polite">
+        {n === 0 && <span className="tx-flow-chips-empty">Chưa chọn ghế · tối đa {max}</span>}
         {seats.map((id) => (
-          <button key={id} type="button" data-chip={id} className={s.chip} aria-label={`Bỏ ghế ${id}`} onClick={(e) => remove(e.currentTarget, id)}>{id} ✕</button>
+          <button key={id} type="button" data-chip={id} className="tx-flow-chip" aria-label={`Bỏ ghế ${id}`} onClick={(e) => remove(e.currentTarget, id)}>{id} ✕</button>
         ))}
-        {n >= max && <span className={s.full}>▲ Đủ {max} ghế</span>}
+        {n >= max && <span className="tx-flow-full">▲ Đủ {max} ghế</span>}
       </div>
-      <div className={s.totalRow}>
+      <div className="tx-flow-total-row">
         <div><small>Tổng (đã gồm phí)</small><b><AnimatedNumber value={n * unitPrice} format="vnd" /></b></div>
-        <Button size="l" arrow className={s.cta} disabled={n === 0} loading={busy} loadingText="Đang giữ…" onClick={onContinue}>
+        <Button size="l" arrow className="tx-flow-cta" disabled={n === 0} loading={busy} loadingText="Đang giữ…" onClick={onContinue}>
           {n === 0 ? "Chọn ghế" : `Giữ ${n} ghế`}
         </Button>
       </div>

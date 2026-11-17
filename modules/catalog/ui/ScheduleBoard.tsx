@@ -7,7 +7,6 @@ import type { EventItem } from "@/modules/catalog/model/types";
 import { SectionHeader } from "@/shared/ui/Section";
 import { SegmentedControl } from "@/shared/ui/SegmentedControl";
 import { EventRow, EventTable } from "@/modules/catalog/ui/EventTable";
-import s from "./ScheduleBoard.module.css";
 
 gsap.registerPlugin(Flip);
 
@@ -56,7 +55,7 @@ export function ScheduleBoard({ events }: { events: EventItem[] }) {
   }, { scope, dependencies: [genre] });
 
   return (
-    <section ref={scope} id="lich-dien" className={s.wrap} aria-labelledby="lich-dien-title">
+    <section ref={scope} id="lich-dien" className="tx-schedule" aria-labelledby="lich-dien-title">
       <SectionHeader
         title={<span id="lich-dien-title">Lịch diễn</span>}
         actions={
@@ -64,14 +63,14 @@ export function ScheduleBoard({ events }: { events: EventItem[] }) {
             label="Lọc theo thể loại"
             value={genre}
             onChange={changeGenre}
-            className={s.filter}
+            className="tx-schedule-filter"
             options={GENRES.map((g) => ({ value: g, label: g }))}
           />
         }
       />
       <p className="tx-sr-only" role="status">{shown.length} sự kiện</p>
       {shown.length === 0 ? (
-        <p className={s.empty}>Chưa có sự kiện thể loại {genre}. Chọn thể loại khác hoặc quay lại “Tất cả”.</p>
+        <p className="tx-schedule-empty">Chưa có sự kiện thể loại {genre}. Chọn thể loại khác hoặc quay lại “Tất cả”.</p>
       ) : (
         <EventTable caption="Bảng lịch diễn">
           {shown.map((e) => (

@@ -3,15 +3,14 @@ import { MobileAppBar } from "@/shared/ui/layout/MobileAppBar";
 import { MobileShell } from "@/shared/ui/layout/MobileShell";
 import { Button } from "@/shared/ui/Button";
 import { Notice } from "@/shared/ui/Notice";
-import s from "./Flow.module.css";
 
 /** Khung chờ khi trang đang đọc tham số URL (Suspense fallback). */
 export function FlowLoading({ title, backHref = "/" }: { title: string; backHref?: string }) {
   return (
     <MobileShell>
       <MobileAppBar backHref={backHref} title={title} />
-      <main className={s.main} aria-busy="true">
-        <p role="status" className={s.chipsEmpty}>Đang tải…</p>
+      <main className="tx-flow-main" aria-busy="true">
+        <p role="status" className="tx-flow-chips-empty">Đang tải…</p>
       </main>
     </MobileShell>
   );
@@ -24,7 +23,7 @@ export function FlowEmpty({ title, message, tone = "warning", backHref = "/", ct
   return (
     <MobileShell>
       <MobileAppBar backHref={backHref} title={title} />
-      <main className={`${s.main} ${s.stateWrap}`}>
+      <main className="tx-flow-main tx-flow-state">
         <Notice tone={tone} title={title}>{message}</Notice>
         {children}
         <Button href={ctaHref} arrow fullWidth>{ctaLabel}</Button>

@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { cx } from "@/shared/lib/cx";
 import { formatClock, holdSecondsLeft } from "@/shared/lib/format";
-import s from "./Booking.module.css";
 
 /**
  * Đồng hồ giữ chỗ. Dưới `urgentAt` giây → nền Lỗi và đọc to MỘT lần (aria-live assertive).
@@ -29,13 +28,13 @@ export function HoldTimer({ expiresAt, durationSec = 600, urgentAt = 120, critic
   const clock = ready ? formatClock(left) : "--:--";
   const label = expired ? "✕ Hết giờ — vé đã trả lại" : urgent ? "▲ Sắp hết giờ" : "Đang giữ vé";
   if (compact) {
-    return <span role="timer" aria-label={`${label} ${clock}`} className={cx(s.timerCompact, urgent && s.timerUrgent, critical && s.timerCritical)}>{clock}</span>;
+    return <span role="timer" aria-label={`${label} ${clock}`} className={cx("tx-booking-timer--compact", urgent && "tx-booking-timer--urgent", critical && "tx-booking-timer--critical")}>{clock}</span>;
   }
   return (
-    <div role="timer" className={cx(s.timer, urgent && s.timerUrgent, critical && s.timerCritical, expired && s.timerExpired)}>
+    <div role="timer" className={cx("tx-booking-timer", urgent && "tx-booking-timer--urgent", critical && "tx-booking-timer--critical", expired && "tx-booking-timer--expired")}>
       <b>{label}</b>
       <b>{clock}</b>
-      <div className={s.track}><div className={s.bar} style={{ width: `${(left / durationSec) * 100}%` }} /></div>
+      <div className="tx-booking-timer-track"><div className="tx-booking-timer-bar" style={{ width: `${(left / durationSec) * 100}%` }} /></div>
       <span className="tx-sr-only" aria-live="assertive">{urgent && left === urgentAt ? `Còn ${Math.round(urgentAt / 60)} phút để thanh toán` : ""}</span>
     </div>
   );

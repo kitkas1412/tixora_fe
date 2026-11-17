@@ -13,7 +13,6 @@ import type { PickerZone } from "@/modules/seating/model/zones";
 import { SeatMap } from "@/modules/seating/ui/SeatMap";
 import { SeatSummaryBar } from "@/modules/seating/ui/SeatSummaryBar";
 import { ZoneTabs } from "@/modules/seating/ui/ZoneTabs";
-import s from "@/shared/ui/flow/Flow.module.css";
 
 /**
  * Màn chọn ghế (đảo tương tác). Hạn giữ vé chỉ được tạo khi người dùng chọn ghế đầu tiên (trong event handler),
@@ -45,7 +44,7 @@ export function SeatPicker({ slug, eventLine, zones, initialZone }: {
   };
 
   return (
-    <MobileShell className={s.seatShell}>
+    <MobileShell className="tx-flow-seat-shell">
       <MobileAppBar
         backHref={`/events/${encodeURIComponent(slug)}`}
         backLabel="Quay lại trang sự kiện"
@@ -53,13 +52,13 @@ export function SeatPicker({ slug, eventLine, zones, initialZone }: {
         subtitle={eventLine}
         right={hold !== null ? <HoldTimer compact expiresAt={hold} durationSec={HOLD_SECONDS} onExpire={onExpire} /> : undefined}
       />
-      <main className={s.seatMain}>
+      <main className="tx-flow-seat-main">
         {expired && (
           <Notice tone="warning" title="Hết thời gian giữ ghế">Ghế đã được trả lại. Vui lòng chọn lại.</Notice>
         )}
-        <span className={s.step}>01 — Khu</span>
+        <span className="tx-flow-step">01 — Khu</span>
         <ZoneTabs zones={zones} value={current.key} onChange={pickZone} />
-        <div className={s.seatBody}>
+        <div className="tx-flow-seat-body">
           <SeatMap
             key={current.key}
             fill

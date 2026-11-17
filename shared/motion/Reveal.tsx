@@ -2,7 +2,6 @@
 import { useRef, type ComponentPropsWithoutRef, type ElementType, type ReactNode } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EASE, DUR, REVEAL_Y, STAGGER, gsap, motionMatchMedia, useGSAP } from "@/shared/motion/motion";
-import "./Motion.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 

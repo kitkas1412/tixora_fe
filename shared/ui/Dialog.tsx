@@ -1,7 +1,6 @@
 "use client";
 import { useId, useRef, type ReactNode } from "react";
 import { DUR, EASE, gsap, MQ_REDUCE, useGSAP } from "@/shared/motion/motion";
-import s from "./Dialog.module.css";
 
 const RESET = "transform,opacity";
 
@@ -62,14 +61,14 @@ export function Dialog({ open, onClose, title, children, actions }: { open: bool
   return (
     <dialog
       ref={ref}
-      className={s.dialog}
+      className="tx-dialog"
       aria-labelledby={titleId}
       onClose={() => { if (silent.current) { silent.current = false; return; } onClose(); }}
       onCancel={onCancel}
     >
-      <h2 id={titleId} className={s.title}>{title}</h2>
-      {children && <div className={s.body}>{children}</div>}
-      {actions && <div className={s.actions}>{actions}</div>}
+      <h2 id={titleId} className="tx-dialog-title">{title}</h2>
+      {children && <div className="tx-dialog-body">{children}</div>}
+      {actions && <div className="tx-dialog-actions">{actions}</div>}
     </dialog>
   );
 }

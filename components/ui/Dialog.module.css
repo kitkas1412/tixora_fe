@@ -1,8 +1,0 @@
-.dialog { width: min(480px, calc(100vw - 32px)); padding: var(--space-4); border: 0; border-top: 8px solid var(--flame-500); background: var(--canvas); color: var(--ink); }
-.dialog::backdrop { background: rgba(16, 14, 22, 0.6); }
-.title { font-size: var(--fs-24); font-weight: var(--fw-black); line-height: var(--lh-heading); }
-.body { margin: var(--space-3) 0 var(--space-4); font-size: 15px; line-height: var(--lh-body); color: var(--text-secondary); }
-.actions { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 12px; }
-.dialog[open]::backdrop { animation: dialogFade var(--dur-base) var(--ease-out); }
-@keyframes dialogFade { from { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .dialog[open]::backdrop { animation: none; } }

@@ -1,3 +1,0 @@
-.wrap { padding-bottom: var(--space-7); }
-.empty { padding: var(--space-5) 0; border-top: var(--rule-thin); color: var(--text-secondary); font-size: var(--fs-16); }
-@media (max-width: 520px) { .filter { max-width: 100%; flex-wrap: nowrap; } .filter > button { flex: 1 1 auto; padding-inline: var(--space-2); } }

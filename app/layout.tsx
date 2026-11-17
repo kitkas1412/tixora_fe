@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { tixoraFont } from "./font";
+import { tixoraFont } from "@/app/font";
 
 export const metadata: Metadata = {
   title: "Create Next App",

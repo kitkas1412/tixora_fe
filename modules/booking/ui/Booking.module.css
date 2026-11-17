@@ -1,0 +1,52 @@
+/* Stepper */
+.stepper { display: inline-flex; border: var(--rule-strong); }
+.stepper button { width: 48px; height: 48px; border: 0; background: transparent; font-size: 22px; font-weight: var(--fw-bold); color: var(--ink); cursor: pointer; }
+.stepper button:disabled { color: var(--gray-400); cursor: not-allowed; }
+.stepper output { width: 48px; display: flex; align-items: center; justify-content: center; font-size: var(--fs-18); font-weight: var(--fw-black); border-inline: 1px solid var(--ink); }
+.stepperOff { opacity: .5; }
+
+/* TierRow */
+.tier { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-4); padding: 20px 0; border-top: var(--rule-thin); }
+.tierSold { background: var(--tier-soldout); }
+.tierInfo { flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.tierInfo b { font-size: 20px; }
+.tierNote { font-size: var(--fs-14); color: var(--text-secondary); }
+.tierFlag { font-size: 13px; font-weight: var(--fw-bold); }
+.flagDanger { color: var(--danger-700); } .flagWarning { color: var(--amber-700); }
+.tierPrice { font-size: 20px; font-weight: var(--fw-bold); min-width: 140px; }
+
+/* OrderSummary */
+.summary { display: flex; flex-direction: column; gap: 12px; border-top: 8px solid var(--flame-500); padding-top: var(--space-3); }
+.summary h2 { font-size: var(--fs-24); font-weight: var(--fw-black); }
+.line { display: flex; justify-content: space-between; gap: var(--space-3); padding: 8px 0; border-top: var(--rule-thin); font-size: 15px; }
+.lineMuted { color: var(--text-secondary); font-size: var(--fs-14); }
+.total { border-top: var(--rule-strong); padding-top: 8px; }
+.total span { font-size: var(--fs-12); font-weight: var(--fw-bold); }
+.total b { display: block; font-size: 40px; font-weight: var(--fw-black); letter-spacing: -0.03em; line-height: var(--lh-heading); }
+.empty { padding: var(--space-3) 0; border-top: var(--rule-thin); color: var(--text-secondary); font-size: 15px; }
+.foot { font-size: 13px; color: var(--text-secondary); }
+
+/* HoldTimer */
+.timer { display: grid; grid-template-columns: minmax(0, 1fr) auto; row-gap: 8px; padding: 12px var(--space-3); background: var(--flame-50); }
+.timer b:last-of-type { font-size: var(--fs-24); font-weight: var(--fw-black); }
+.track { grid-column: span 2; height: 6px; background: var(--gray-300); }
+.bar { height: 100%; background: var(--ink); transition: width 1s linear; }
+.timerUrgent { background: var(--danger-700); color: var(--white); }
+.timerUrgent .track { background: rgba(255,255,255,.35); } .timerUrgent .bar { background: var(--white); }
+.timerExpired { background: var(--gray-100); color: var(--gray-700); }
+.timerExpired .bar { background: var(--gray-400); }
+.timerCompact { display: inline-flex; padding: 4px 8px; background: var(--flame-50); font-weight: var(--fw-black); }
+.timerCompact.timerUrgent { background: var(--danger-700); color: var(--white); }
+
+/* Queue */
+.queue { background: var(--bg-inverse); color: var(--canvas); padding: var(--space-4); display: flex; flex-direction: column; gap: 12px; }
+.queue small { font-size: var(--fs-12); font-weight: var(--fw-bold); letter-spacing: var(--tracking-label); }
+.queue strong { font-size: var(--fs-72); font-weight: var(--fw-black); line-height: var(--lh-display); letter-spacing: var(--tracking-display); }
+.queueTrack { height: 8px; background: #2E2B3A; }
+.queueBar { height: 100%; background: var(--volt-500); }
+.queueNote { font-size: 13px; color: #C9C7D6; }
+
+/* HoldTimer: ≤ 60s, nhấp nháy opacity chậm một thuộc tính (base.css đã tắt animation khi giảm chuyển động) */
+.timerCritical { outline: 2px solid transparent; outline-offset: 2px; animation: timerPulse 1.6s ease-in-out infinite; }
+@keyframes timerPulse { 0%, 100% { outline-color: transparent; } 50% { outline-color: currentColor; } }
+@media (prefers-reduced-motion: reduce) { .timerCritical { animation: none; } }

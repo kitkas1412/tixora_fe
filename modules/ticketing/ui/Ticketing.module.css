@@ -1,0 +1,13 @@
+/* Ticket */
+.ticket { display: flex; flex-direction: column; }
+.ticketHead { background: var(--flame-500); padding: var(--space-3); display: flex; flex-direction: column; gap: 8px; }
+.ticketHead strong { font-size: 40px; font-weight: var(--fw-black); line-height: var(--lh-display); letter-spacing: var(--tracking-display); }
+.ticketTop { display: flex; justify-content: space-between; font-size: var(--fs-12); font-weight: var(--fw-bold); }
+.ticketFacts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-inline: var(--rule-strong); }
+.ticketFacts div { padding: 10px var(--space-3); border-bottom: var(--rule-thin); }
+.ticketFacts div:nth-child(odd) { border-right: var(--rule-thin); }
+.ticketFacts small { display: block; font-size: 11px; font-weight: var(--fw-bold); color: var(--text-secondary); text-transform: uppercase; }
+.ticketFacts b { font-size: 17px; }
+.ticketQr { border: var(--rule-strong); border-top: 0; background: var(--white); padding: 20px var(--space-3); display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
+.ticketQr b { letter-spacing: .08em; }
+.ticketQr span { font-size: var(--fs-12); color: var(--text-secondary); }
